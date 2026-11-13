@@ -2,6 +2,15 @@
 
 <img width="1108" height="540" alt="image" src="https://github.com/user-attachments/assets/1fac1900-7ca7-4952-b965-eb58c6e726c1" />
 
+<img width="1106" height="428" alt="image" src="https://github.com/user-attachments/assets/cf1270c7-4723-4b20-9dee-c5f86fc0d473" />
+
+<img width="967" height="354" alt="image" src="https://github.com/user-attachments/assets/fdb8b50f-940a-4af6-96e7-380a2d10254b" />
+
+<img width="1103" height="478" alt="image" src="https://github.com/user-attachments/assets/be58f4c4-bf81-464f-8aae-06a83700610f" />
+
+<img width="1095" height="504" alt="image" src="https://github.com/user-attachments/assets/c5cd3400-7402-4a5e-bfa5-41aea43818c7" />
+
+
 
 
 **Idiomas / Languages / 语言:** [Español](#español) · [English](#english) · [中文](#中文)
@@ -111,8 +120,8 @@ deepseek                 # o: python main.py
 | `Ctrl+W` | Renombra la pestaña |
 | `Ctrl+C` | Cancela la respuesta en curso |
 
-> **Importante:** nunca subas tu archivo `.env` (contiene tu API key). El
-> `.gitignore` ya lo excluye.
+<img width="1107" height="623" alt="image" src="https://github.com/user-attachments/assets/600f58ed-bcdd-4b40-a08d-f17904615735" />
+
 
 ---
 
@@ -214,8 +223,7 @@ deepseek                 # or: python main.py
 | `Ctrl+W` | Rename the tab |
 | `Ctrl+C` | Cancel the reply in progress |
 
-> **Important:** never commit your `.env` file (it holds your API key). The
-> `.gitignore` already excludes it.
+<img width="1107" height="623" alt="image" src="https://github.com/user-attachments/assets/9f823848-c193-4b0f-b0d0-cedd5b888796" />
 
 ---
 
@@ -311,8 +319,8 @@ deepseek                 # 或：python main.py
 | `Ctrl+W` | 重命名标签页 |
 | `Ctrl+C` | 取消正在生成的回复 |
 
-> **重要：** 切勿提交你的 `.env` 文件（其中包含 API 密钥）。`.gitignore` 已将其
-> 排除。
+<img width="1107" height="623" alt="image" src="https://github.com/user-attachments/assets/8a165afb-4587-4406-8077-0e844c6bfa37" />
+
 
 ---
 
