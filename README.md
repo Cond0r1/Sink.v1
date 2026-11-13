@@ -1,5 +1,9 @@
 # Sink · Agente DeepSeek
 
+<img width="1108" height="540" alt="image" src="https://github.com/user-attachments/assets/1fac1900-7ca7-4952-b965-eb58c6e726c1" />
+
+
+
 **Idiomas / Languages / 语言:** [Español](#español) · [English](#english) · [中文](#中文)
 
 Un agente de terminal construido sobre la API de DeepSeek: razona en bucle, usa
@@ -114,6 +118,7 @@ deepseek                 # o: python main.py
 **Sink** is an AI agent that runs in your terminal. Unlike a regular chatbot, it
 doesn't just talk — it **acts** on your machine using tools, within the security
 boundaries you define.
+<img width="1108" height="540" alt="image" src="https://github.com/user-attachments/assets/d1306d76-54bc-48fb-993d-ee3b07650ef1" />
 
 ### Features
 
@@ -207,6 +212,7 @@ deepseek                 # or: python main.py
 ## 中文
 
 ### 这是什么？
+<img width="1108" height="540" alt="image" src="https://github.com/user-attachments/assets/33658554-106e-4247-83c9-d66cab606642" />
 
 **Sink** 是一个运行在终端中的 AI 智能体。与普通聊天机器人不同，它不仅会对话，
 还能在你设定的安全边界内使用工具**在你的电脑上执行操作**。
