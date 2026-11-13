@@ -20,5 +20,5 @@ dependencies = [
 deepseek = "main:main"
 
 [tool.setuptools]
-py-modules = ["main", "config", "agent", "llm", "memory", "atajos"]
+py-modules = ["main", "config", "agent", "llm", "memory", "atajos", "idiomas"]
 packages = ["tools"]

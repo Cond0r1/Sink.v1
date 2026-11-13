@@ -46,6 +46,9 @@ herramientas, dentro de límites de seguridad que tú defines.
   de archivos con emoji por tipo.
 - 🔁 **Multimodelo:** cambia entre modelos (`deepseek-chat`, `deepseek-reasoner`)
   con `Shift+Tab`.
+- 🌐 **Interfaz multilenguaje:** con `/l` eliges el idioma de la interfaz
+  (Español · English · 中文) desde un menú con flechas ↑/↓ y Enter; cambia solo
+  el texto de la interfaz y la elección se recuerda entre sesiones.
 - ⚙️ **Configurable por `.env`:** modelos disponibles, máximo de iteraciones,
   temperatura, directorios permitidos y más.
 
@@ -58,6 +61,7 @@ memory.py     Historial de la conversación (con persistencia y recorte)
 agent.py      Núcleo: el bucle del agente y el conteo de tokens
 tools/        Herramientas (base, archivos, shell, web, memoria)
 atajos.py     Atajos de teclado
+idiomas.py    Textos de la interfaz en varios idiomas (i18n) + menú de /l
 main.py       Interfaz de terminal + arranque
 COMANDOS.md   Referencia rápida de comandos y atajos
 settings.json Ajustes persistentes (persistencia, intervalo de /clih)
@@ -100,6 +104,7 @@ deepseek                 # o: python main.py
 | `/persistencia-disable` | Desactiva y pregunta si borrar la memoria |
 | `/tokens` | Tokens gastados en esta sesión |
 | `/tokens_p` | Saldo restante en dinero |
+| `/l` | Cambia el idioma de la interfaz (menú con flechas ↑/↓ + Enter) |
 | `exit` (o `salir` / `quit`) | Termina el programa |
 | `Shift+Tab` | Cambia de modelo |
 | `Ctrl+N` | Nueva sesión (pestaña) |
@@ -144,6 +149,9 @@ boundaries you define.
   listings with a per-type emoji.
 - 🔁 **Multi-model:** switch models (`deepseek-chat`, `deepseek-reasoner`) with
   `Shift+Tab`.
+- 🌐 **Multi-language UI:** use `/l` to pick the interface language
+  (Español · English · 中文) from an arrow-key menu (↑/↓ + Enter); only the
+  interface text changes and the choice is remembered across sessions.
 - ⚙️ **Configurable via `.env`:** available models, max iterations, temperature,
   allowed directories, and more.
 
@@ -156,6 +164,7 @@ memory.py     Conversation history (with persistence and trimming)
 agent.py      Core: the agent loop and token counting
 tools/        Tools (base, files, shell, web, memory)
 atajos.py     Keyboard shortcuts
+idiomas.py    Interface text in several languages (i18n) + the /l menu
 main.py       Terminal UI + startup
 COMANDOS.md   Quick reference for commands and shortcuts
 settings.json Persistent settings (persistence, /clih interval)
@@ -198,6 +207,7 @@ deepseek                 # or: python main.py
 | `/persistencia-disable` | Disable and ask whether to wipe memory |
 | `/tokens` | Tokens spent this session |
 | `/tokens_p` | Remaining balance in money |
+| `/l` | Change the interface language (arrow-key menu ↑/↓ + Enter) |
 | `exit` (or `salir` / `quit`) | Quit the program |
 | `Shift+Tab` | Switch model |
 | `Ctrl+N` | New session (tab) |
@@ -238,6 +248,8 @@ deepseek                 # or: python main.py
   输入时的命令高亮，以及按类型显示 emoji 的文件列表。
 - 🔁 **多模型**：用 `Shift+Tab` 在模型之间切换（`deepseek-chat`、
   `deepseek-reasoner`）。
+- 🌐 **多语言界面**：使用 `/l` 通过方向键菜单（↑/↓ + Enter）选择界面语言
+  （Español · English · 中文）；只改变界面文本，并在会话之间记住你的选择。
 - ⚙️ **通过 `.env` 配置**：可用模型、最大迭代次数、温度、允许的目录等。
 
 ### 项目结构
@@ -249,6 +261,7 @@ memory.py     对话历史（支持持久化与精简）
 agent.py      核心：智能体循环与 token 计数
 tools/        工具（基础、文件、Shell、网页、记忆）
 atajos.py     键盘快捷键
+idiomas.py    多语言界面文本（i18n）+ /l 菜单
 main.py       终端界面 + 启动
 COMANDOS.md   命令与快捷键速查
 settings.json 持久化设置（持久化开关、/clih 间隔）
@@ -291,6 +304,7 @@ deepseek                 # 或：python main.py
 | `/persistencia-disable` | 关闭并询问是否删除记忆 |
 | `/tokens` | 本次会话消耗的 token |
 | `/tokens_p` | 剩余金额余额 |
+| `/l` | 切换界面语言（方向键菜单 ↑/↓ + Enter） |
 | `exit`（或 `salir` / `quit`） | 退出程序 |
 | `Shift+Tab` | 切换模型 |
 | `Ctrl+N` | 新会话（标签页） |

@@ -12,6 +12,7 @@
 | `/persistencia-disable` | Desactiva y pregunta si borrar la memoria |
 | `/tokens` | Tokens gastados en esta sesión |
 | `/tokens_p` | Saldo restante en dinero |
+| `/l` | Cambia el idioma de la interfaz (menú con flechas ↑/↓ + Enter) |
 | `exit` | Cierra el agente (también `salir` / `quit`) |
 
 ## Atajos de teclado

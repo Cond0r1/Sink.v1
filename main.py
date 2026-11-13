@@ -17,8 +17,10 @@ from rich.markdown import Markdown
 from rich.text import Text
 
 import config
+import idiomas
 from agent import Agent
 from atajos import crear_atajos
+from idiomas import t
 
 console = Console()
 
@@ -139,23 +141,6 @@ def texto_pensando(frame: int) -> Text:
     return t
 
 
-AYUDA = """\
-Atajos y comandos:
-  /reset        borra la conversación
-  /clear        limpia la pantalla   (también: clear / cls)
-  /clih         limpieza periódica del historial (pregunta cada N mensajes)
-  /persistencia          guarda la conversación entre sesiones
-  /persistencia-disable  desactiva y pregunta si borrar la memoria
-  /tokens       tokens gastados (sesión / por este agente)
-  /tokens_p     saldo restante en dinero
-  /key          muestra esta ayuda
-  Ctrl+N        nueva sesión (pestaña)
-  Ctrl+W        nombrar la pestaña
-  Shift+Tab     cambia de modelo
-  exit          termina el programa\
-"""
-
-
 def construir_banner(agente: Agent) -> Text:
     """Logo a la izquierda; a la derecha: versión+autor, modelo y carpeta."""
     banner = Text()
@@ -175,7 +160,24 @@ def construir_banner(agente: Agent) -> Text:
 
 
 def mostrar_ayuda() -> None:
-    console.print(AYUDA, style="grey70")
+    console.print(t("ayuda"), style="grey70")
+
+
+def elegir_idioma_interactivo(settings: dict) -> None:
+    """Abre el menú de idioma (/l), aplica la elección y la guarda."""
+    codigo = idiomas.elegir_idioma(idiomas.get_idioma())
+    if not codigo:
+        console.print(t("cancelado") + "\n", style="grey50")
+        return
+    if codigo == idiomas.get_idioma():
+        return  # mismo idioma: nada que cambiar
+    idiomas.set_idioma(codigo)
+    settings["idioma"] = codigo
+    guardar_settings(settings)
+    console.print(
+        t("idioma_cambiado", nombre=idiomas.nombre_idioma(codigo)) + "\n",
+        style="grey50",
+    )
 
 
 def main() -> None:
@@ -191,6 +193,7 @@ def main() -> None:
         return
 
     settings = cargar_settings()
+    idiomas.set_idioma(settings.get("idioma", idiomas.IDIOMA_POR_DEFECTO))
     try:
         agente = Agent(persist=settings.get("persist", False))
     except Exception as error:  # noqa: BLE001
@@ -198,7 +201,7 @@ def main() -> None:
         return
 
     console.print(construir_banner(agente))
-    console.print("Escribe /key para ver los atajos y comandos.\n", style="grey50")
+    console.print(t("banner_hint") + "\n", style="grey50")
 
     sesion = crear_sesion(agente)
 
@@ -212,7 +215,7 @@ def main() -> None:
         except (EOFError, KeyboardInterrupt):
             # Ctrl+C / Ctrl+D mientras escribes: salir limpio a la consola.
             os.system("cls" if os.name == "nt" else "clear")
-            console.print(Text("[!]Cerrando...", style="bold yellow"))
+            console.print(Text(t("cerrando"), style="bold yellow"))
             break
 
         entrada = entrada_cruda.strip()
@@ -234,54 +237,57 @@ def main() -> None:
         if entrada.lower() in ("/key", "/help"):
             mostrar_ayuda()
             continue
+        if entrada.lower() == "/l":
+            elegir_idioma_interactivo(settings)
+            continue
         if entrada.lower() == "/reset":
             agente.memory.reset()
             agente.memory.save()
             turnos = 0
-            print("[memoria] Conversación borrada.\n")
+            console.print(t("reset_ok") + "\n")
             continue
         if entrada.lower() == "/clih":
             try:
-                n = input("¿Cada cuántos mensajes reviso para limpiar? (0 = desactivar): ").strip()
+                n = input(t("clih_pregunta")).strip()
                 limpieza_cada = max(0, int(n))
             except (ValueError, EOFError, KeyboardInterrupt):
-                console.print("Cancelado.\n")
+                console.print(t("cancelado") + "\n")
                 continue
             turnos = 0
             settings["limpieza_cada"] = limpieza_cada
             guardar_settings(settings)
             if limpieza_cada:
-                console.print(f"Revisaré cada {limpieza_cada} mensajes.\n", style="grey50")
+                console.print(t("clih_cada", n=limpieza_cada) + "\n", style="grey50")
             else:
-                console.print("Limpieza periódica desactivada.\n", style="grey50")
+                console.print(t("clih_off") + "\n", style="grey50")
             continue
         if entrada.lower() == "/persistencia":
             agente.persist = True
             agente.memory.save()
             settings["persist"] = True
             guardar_settings(settings)
-            console.print("Persistencia ACTIVADA: se guardará la conversación.\n", style="grey50")
+            console.print(t("persist_on") + "\n", style="grey50")
             continue
         if entrada.lower() == "/persistencia-disable":
             agente.persist = False
             settings["persist"] = False
             guardar_settings(settings)
             try:
-                r = input("¿Borrar la memoria de conversación guardada? (s/n): ").strip().lower()
+                r = input(t("persist_pregunta_borrar")).strip().lower()
             except (EOFError, KeyboardInterrupt):
                 r = "n"
             if r in ("s", "si", "sí", "y", "yes"):
                 agente.memory.history_file.unlink(missing_ok=True)
                 agente.memory.reset()
-                console.print("Persistencia DESACTIVADA y memoria borrada.\n", style="grey50")
+                console.print(t("persist_off_borrada") + "\n", style="grey50")
             else:
-                console.print("Persistencia DESACTIVADA (memoria conservada).\n", style="grey50")
+                console.print(t("persist_off_conservada") + "\n", style="grey50")
             continue
         if entrada.lower() in ("/clear", "clear", "cls"):
             os.system("cls" if os.name == "nt" else "clear")
             continue
         if entrada.lower() == "/tokens":
-            console.print(f"Tokens gastados (esta sesión): {agente.session_tokens['total']}\n")
+            console.print(t("tokens", n=agente.session_tokens["total"]) + "\n")
             continue
         if entrada.lower() == "/tokens_p":
             try:
@@ -290,9 +296,12 @@ def main() -> None:
                 console.print(f"[red]{error}[/red]\n")
                 continue
             if saldo:
-                console.print(f"Saldo restante: {saldo['total']:.2f} {saldo['currency']}\n")
+                console.print(
+                    t("saldo", total=f"{saldo['total']:.2f}", currency=saldo["currency"])
+                    + "\n"
+                )
             else:
-                console.print("No hay información de saldo.\n")
+                console.print(t("saldo_none") + "\n")
             continue
 
         # Turno normal. Contador en vivo: solo si tarda >2 s.
@@ -321,13 +330,13 @@ def main() -> None:
             if estado["live"] is not None:
                 estado["live"].stop()
                 estado["live"] = None
-            console.print("[grey50][cancelado][/grey50]\n")
+            console.print(f"[grey50]{t('cancelado_resp')}[/grey50]\n")
             continue
         except Exception as error:  # noqa: BLE001
             if estado["live"] is not None:
                 estado["live"].stop()
                 estado["live"] = None
-            console.print(f"\n[bold red][error][/bold red] {error}\n")
+            console.print(f"\n[bold red]{t('error_label')}[/bold red] {error}\n")
             continue
         finally:
             if estado["live"] is not None:
@@ -345,19 +354,15 @@ def main() -> None:
         turnos += 1
         if limpieza_cada and turnos >= limpieza_cada:
             try:
-                r = input(
-                    f"[historial] Van {turnos} mensajes. ¿Limpiar (l) o extender (e)?: "
-                ).strip().lower()
+                r = input(t("hist_pregunta", n=turnos)).strip().lower()
             except (EOFError, KeyboardInterrupt):
                 r = "e"
             if r in ("l", "limpiar"):
                 borrados = agente.memory.trim()
                 agente.memory.save()
-                console.print(
-                    f"[historial] Limpiado: {borrados} mensajes eliminados.\n", style="grey50"
-                )
+                console.print(t("hist_limpiado", n=borrados) + "\n", style="grey50")
             else:
-                console.print("[historial] Extendido.\n", style="grey50")
+                console.print(t("hist_extendido") + "\n", style="grey50")
             turnos = 0
 
 

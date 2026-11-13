@@ -9,6 +9,7 @@ from prompt_toolkit.application import run_in_terminal
 from prompt_toolkit.key_binding import KeyBindings
 
 import config
+from idiomas import t
 
 
 def abrir_nueva_sesion() -> None:
@@ -56,7 +57,7 @@ def crear_atajos(agente) -> KeyBindings:
     def _nombrar_pestana(event) -> None:
         def pedir_nombre() -> None:
             try:
-                nombre = input("Nombre de la pestaña: ").strip()
+                nombre = input(t("tab_nombre")).strip()
             except (EOFError, KeyboardInterrupt):
                 return
             if nombre:
