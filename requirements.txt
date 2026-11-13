@@ -1,0 +1,20 @@
+# Dependencias del agente DeepSeek
+# Instalar todo con:  pip install -r requirements.txt
+
+# Cliente de la API de DeepSeek (compatible con OpenAI) -> llm.py
+openai==3.49.0
+
+# Carga de variables desde el archivo .env -> config.py
+python-dotenv==1.2.4
+
+# Peticiones HTTP para la búsqueda y lectura web -> tools/web.py
+requests==2.34.2
+
+# Parseo de HTML (extraer texto de las páginas) -> tools/web.py
+beautifulsoup4==4.15.0
+
+# Interfaz de terminal: renderiza Markdown y colores -> main.py
+rich==15.0.0
+
+# Entrada avanzada: atajos de teclado (Shift+Tab) y barra inferior -> main.py
+prompt_toolkit==3.0.53

@@ -1,0 +1,23 @@
+# --- Secretos (NUNCA subir) ---
+.env
+
+# --- Datos locales del agente ---
+history.json
+memory.json
+settings.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# --- Sistema / editores ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

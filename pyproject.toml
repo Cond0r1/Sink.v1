@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sink-deepseek"
+version = "1.0.0"
+description = "Sink: agente DeepSeek de terminal"
+requires-python = ">=3.10"
+dependencies = [
+    "openai==3.49.0",
+    "python-dotenv==1.2.4",
+    "requests==2.34.2",
+    "beautifulsoup4==4.15.0",
+    "rich==15.0.0",
+    "prompt_toolkit==3.0.53",
+]
+
+[project.scripts]
+deepseek = "main:main"
+
+[tool.setuptools]
+py-modules = ["main", "config", "agent", "llm", "memory", "atajos"]
+packages = ["tools"]
